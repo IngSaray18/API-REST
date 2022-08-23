@@ -13,16 +13,23 @@ async function fetchData(urlApi){
     img1.src= data[0].url;
     img2.src= data[1].url;
     img3.src= data[2].url;
+
+    bt1.onclick = () => guardarDogo(data[0].id);
+    bt2.onclick = () => guardarDogo(data[1].id);
+    bt3.onclick = () => guardarDogo(data[2].id);
+    
+
+
 }
 
-async function guardarDogo(){
+async function guardarDogo(id){
     const res = await fetch(url_Fav, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          image_id: 'HJ7Pzg5EQ'
+          image_id: id
         }),
       });
       const data = await res.json();
@@ -43,10 +50,25 @@ async function guardarDogo(){
     
       if (res.status !== 200) {
         spanError.innerHTML = "Hubo un error: " + res.status + data.message;
+      }else{
+        data.forEach(dog => {
+          const section = document.getElementById('favoritesPerritos')
+          const article = document.createElement('article');
+          const img = document.createElement('img');
+          const btn = document.createElement('button');
+          const btnText = document.createTextNode('Sacar al perro de favoritos');
+          img.src = dog.image.url;
+          img.width = 150;
+          btn.appendChild(btnText);
+          article.appendChild(img);
+          article.appendChild(btn);
+          section.appendChild(article);
+        });
       }
     }
 
-    loadFavDogs()
+  
 fetchData(URL_Buscar);
+loadFavDogs();
 
 //btn.addEventListener('click', clicked);

@@ -91,6 +91,15 @@
   -webkit-user-select: none;
   touch-action: manipulation;
 }
+#favoritesPerritos {
+  margin-top: 100;
+  border-radius: 10px;
+        display: grid;
+      grid-template-columns: repeat(auto-fill, 240px);
+      
+      gap: 26px;
+      place-content: center;
+}
     #favoritesPerritos article{
         border-radius: 10px;
         display: grid;
@@ -109,7 +118,10 @@
     }
     }
     #randomDog button{
+      place-content: center;
+      place-self: center;
         margin-top: 13px;
+        margin-bottom: 25px;
         background-color: #FFC090;
   border-radius: 8px;
   border-style: none;
@@ -149,38 +161,33 @@
   <h1>Doggo App</h1>
 <h2>Perritos aleatorios</h2>
   <section id="randomDog">
-    
+   
 
     <article>
       <img id="img1" width="150" alt="Foto Perrito aleatorio">
-      <button  id="bt1" onclick="guardarDogo()">Guardar Perrrito en favoritos</button>
+      <button  id="bt1" >Guardar Perrrito en favoritos</button>
     </article>
 
     <article>
       <img id="img2" width="150" alt="Foto Perrito aleatorio">
-      <button id="bt2" onclick="guardarDogo()">Guardar Perrito en favoritos</button>
+      <button id="bt2">Guardar Perrito en favoritos</button>
     </article>
 
     <article>
       <img id="img3" width="150" alt="Foto Perrito aleatorio">
-      <button id="bt3" onclick="guardarDogo()">Guardar Perrito en favoritos</button>
+      <button id="bt3" >Guardar Perrito en favoritos</button>
     </article>
     
-
+    <button id="recargar" onclick="fetchData(URL_Buscar)">Recargar</button>
   
   </section>
   
   <section id="favoritesPerritos">
-    <h2>Perritos favoritos</h2>
-
-    <article>
-      <img id="img4" width="150" alt="Foto Perrito aleatorio">
-      <button>Sacar al Perrito de favoritos</button>
-    </article>
+    
   </section>
-  <span id="error"></span>
-  <button id="recargar" onclick="fetchData(URL_Buscar)">Recargar</button>
+  
+  
   <script src="./main.js"></script>
-</body>
+</body> <span id="error"></span>
 
 </html>
