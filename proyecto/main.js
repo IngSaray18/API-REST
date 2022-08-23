@@ -1,5 +1,8 @@
 const URL_Buscar = 'https://api.thedogapi.com/v1/images/search?limit=3&api_key=live_yHwh26W5IjSNKT6C7gGVJe0EvatPTLHIPqD8Jy9fvKruBjE8h8d5gTlHDZpvnll2';
 const url_Fav= 'https://api.thedogapi.com/v1/favourites?api_key=live_yHwh26W5IjSNKT6C7gGVJe0EvatPTLHIPqD8Jy9fvKruBjE8h8d5gTlHDZpvnll2'
+const url_delete =  (id) =>`https://api.thedogapi.com/v1/favourites/${id}?api_key=live_yHwh26W5IjSNKT6C7gGVJe0EvatPTLHIPqD8Jy9fvKruBjE8h8d5gTlHDZpvnll2`
+
+
 const api_key ='api_key=live_yHwh26W5IjSNKT6C7gGVJe0EvatPTLHIPqD8Jy9fvKruBjE8h8d5gTlHDZpvnll2'
 const btn= document.querySelector(".button");
 const spanError = document.getElementById('error')
@@ -39,6 +42,8 @@ async function guardarDogo(id){
     
       if (res.status !== 200) {
         spanError.innerHTML = "Hubo un error: " + res.status + data.message;
+      }else{
+        loadFavDogs();
       }
     }
 
@@ -51,8 +56,16 @@ async function guardarDogo(id){
       if (res.status !== 200) {
         spanError.innerHTML = "Hubo un error: " + res.status + data.message;
       }else{
+        const section = document.getElementById('favoritesPerritos')
+        section.innerHTML="";
+        /*
+        const h2 = document.createElement("h2");
+        const h2text = document.createTextNode("Perros Favoritos");
+        h2.appendChild(h2text);
+        section.appendChild(h2);
+*/
         data.forEach(dog => {
-          const section = document.getElementById('favoritesPerritos')
+          
           const article = document.createElement('article');
           const img = document.createElement('img');
           const btn = document.createElement('button');
@@ -60,6 +73,7 @@ async function guardarDogo(id){
           img.src = dog.image.url;
           img.width = 150;
           btn.appendChild(btnText);
+          btn.onclick = () => deleteDog(dog.id);
           article.appendChild(img);
           article.appendChild(btn);
           section.appendChild(article);
@@ -67,6 +81,24 @@ async function guardarDogo(id){
       }
     }
 
+
+    async function deleteDog(id){
+      const res = await fetch(url_delete(id),{
+        method: 'DELETE',
+        
+      });
+      const data = await res.json();
+
+      if (res.status !== 200) {
+        spanError.innerHTML = "Hubo un error: " + res.status + data.message;
+      }else{
+        console.log("perro eliminado");
+        loadFavDogs();
+      }
+    }
+
+    
+    
   
 fetchData(URL_Buscar);
 loadFavDogs();
